@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced Styling and JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    .quiz, .weather {
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 8px;
+    }
+    .carousel {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .carousel img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+    }
+    @media (max-width: 768px) {
+      body {
+        background-color: #f0f8ff;
+      }
+      h1 {
+        font-size: 1.5em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Advanced Styling and JavaScript</h1>
+
+  <!-- Interactive Quiz -->
+  <div class="quiz">
+    <h2>Quiz</h2>
+    <p id="question">What is the capital of France?</p>
+    <button onclick="checkAnswer('Paris')">Paris</button>
+    <button onclick="checkAnswer('Berlin')">Berlin</button>
+    <button onclick="checkAnswer('Madrid')">Madrid</button>
+    <p id="quiz-result"></p>
+  </div>
+
+  <!-- Image Carousel -->
+  <div class="carousel">
+    <img id="carousel-image" src="https://via.placeholder.com/300x200?text=Image+1" alt="carousel image" />
+  </div>
+
+  <!-- API Fetch -->
+  <div class="weather">
+    <h2>Weather Info</h2>
+    <button onclick="getWeather()">Get Weather (London)</button>
+    <p id="weather-result"></p>
+  </div>
+
+  <script>
+    // Quiz Logic
+    function checkAnswer(answer) {
+      const correct = "Paris";
+      const result = document.getElementById("quiz-result");
+      result.textContent = answer === correct ? "Correct!" : "Try Again!";
+    }
+
+    // Carousel Logic
+    const images = [
+      "https://via.placeholder.com/300x200?text=Image+1",
+      "https://via.placeholder.com/300x200?text=Image+2",
+      "https://via.placeholder.com/300x200?text=Image+3"
+    ];
+    let currentIndex = 0;
+    setInterval(() => {
+      currentIndex = (currentIndex + 1) % images.length;
+      document.getElementById("carousel-image").src = images[currentIndex];
+    }, 3000);
+
+    // API Fetch Logic
+    async function getWeather() {
+      const result = document.getElementById("weather-result");
+      try {
+        const res = await fetch("https://api.weatherapi.com/v1/current.json?key=demo&q=London");
+        const data = await res.json();
+        result.textContent = Temperature in London; ${data.current.temp_c}°C;
+      } catch (err) {
+        result.textContent = "Failed to fetch weather.";
+      }
+    }
+  </script>
+
+</body>
+</html>
