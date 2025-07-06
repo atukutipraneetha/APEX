@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Listing</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0077b6;
+    }
+
+    .controls {
+      max-width: 800px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    select {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .product {
+      background-color: white;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      width: calc(33.33% - 20px);
+    }
+
+    .product h3 {
+      margin-bottom: 10px;
+    }
+
+    .product p {
+      margin: 5px 0;
+    }
+
+    @media (max-width: 768px) {
+      .product {
+        width: calc(50% - 20px);
+      }
+    }
+
+    @media (max-width: 500px) {
+      .product {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Product Listing Page</h1>
+
+  <div class="controls">
+    <select id="categoryFilter" onchange="filterAndSort()">
+      <option value="all">All Categories</option>
+      <option value="electronics">Electronics</option>
+      <option value="books">Books</option>
+      <option value="clothing">Clothing</option>
+    </select>
+
+    <select id="sortOption" onchange="filterAndSort()">
+      <option value="default">Sort by</option>
+      <option value="priceAsc">Price: Low to High</option>
+      <option value="priceDesc">Price: High to Low</option>
+      <option value="rating">Rating</option>
+    </select>
+  </div>
+
+  <div class="product-list" id="productList"></div>
+
+  <script>
+    const products = [
+      { name: "Smartphone", category: "electronics", price: 30000, rating: 4.2 },
+      { name: "T-shirt", category: "clothing", price: 799, rating: 4.5 },
+      { name: "Laptop", category: "electronics", price: 55000, rating: 4.6 },
+      { name: "Novel", category: "books", price: 399, rating: 4.1 },
+      { name: "Headphones", category: "electronics", price: 1999, rating: 4.3 },
+      { name: "Jeans", category: "clothing", price: 1299, rating: 4.0 },
+      { name: "Textbook", category: "books", price: 899, rating: 4.4 }
+    ];
+
+    function filterAndSort() {
+      const category = document.getElementById("categoryFilter").value;
+      const sort = document.getElementById("sortOption").value;
+
+      let filtered = [...products];
+
+      if (category !== "all") {
+        filtered = filtered.filter(p => p.category === category);
+      }
+
+      if (sort === "priceAsc") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sort === "priceDesc") {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sort === "rating") {
+        filtered.sort((a, b) => b.rating - a.rating);
+      }
+
+      displayProducts(filtered);
+    }
+
+    function displayProducts(products) {
+      const list = document.getElementById("productList");
+      list.innerHTML = "";
+
+      products.forEach(p => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+          <h3>${p.name}</h3>
+          <p>Category: ${p.category}</p>
+          <p>Price: ₹${p.price}</p>
+          <p>Rating: ⭐ ${p.rating}</p>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    // Initial display
+    filterAndSort();
+  </script>
+</body>
+</html>
